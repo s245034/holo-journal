@@ -10,33 +10,22 @@ export default function StreakCounter() {
 
   return (
     <div className="card-surface p-4 flex items-center gap-4">
-      {/* Streak */}
       <div className="flex items-center gap-2">
         <span className="text-2xl animate-streak-pulse">🔥</span>
         <div>
-          <p className="text-xl font-bold text-foreground">{stats.currentStreak}-day</p>
-          <p className="text-[11px] text-muted-foreground">streak</p>
+          <p className="text-xl font-bold text-foreground">{stats.currentStreak}日</p>
+          <p className="text-[11px] text-muted-foreground">連続記録</p>
         </div>
       </div>
 
       <div className="h-10 w-px bg-border" />
 
-      {/* Weekly ring */}
       <div className="flex items-center gap-3">
         <div className="relative h-11 w-11">
           <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-            <circle
-              cx="18" cy="18" r="15"
-              fill="none"
-              stroke="hsl(var(--muted))"
-              strokeWidth="3"
-            />
+            <circle cx="18" cy="18" r="15" fill="none" stroke="hsl(var(--muted))" strokeWidth="3" />
             <motion.circle
-              cx="18" cy="18" r="15"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="3"
-              strokeLinecap="round"
+              cx="18" cy="18" r="15" fill="none" stroke="hsl(var(--primary))" strokeWidth="3" strokeLinecap="round"
               strokeDasharray={`${weekProgress * 94.25} 94.25`}
               initial={{ strokeDasharray: '0 94.25' }}
               animate={{ strokeDasharray: `${weekProgress * 94.25} 94.25` }}
@@ -48,8 +37,8 @@ export default function StreakCounter() {
           </span>
         </div>
         <div>
-          <p className="text-xs font-semibold text-foreground">This week</p>
-          <p className="text-[11px] text-muted-foreground">{stats.totalEntries} total</p>
+          <p className="text-xs font-semibold text-foreground">今週</p>
+          <p className="text-[11px] text-muted-foreground">{stats.totalEntries} 件</p>
         </div>
       </div>
     </div>

@@ -9,17 +9,12 @@ interface MoodSelectorProps {
 export default function MoodSelector({ value, onChange }: MoodSelectorProps) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs font-medium text-muted-foreground mr-1">Mood</span>
+      <span className="text-xs font-medium text-muted-foreground mr-1">気分</span>
       {MOOD_EMOJIS.map((emoji, i) => {
         const mood = i + 1;
         const active = value === mood;
         return (
-          <button
-            key={mood}
-            type="button"
-            onClick={() => onChange(mood)}
-            className="relative p-1"
-          >
+          <button key={mood} type="button" onClick={() => onChange(mood)} className="relative p-1">
             {active && (
               <motion.div
                 layoutId="moodRing"

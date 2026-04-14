@@ -7,18 +7,18 @@ import { BookOpen, Sparkles, Flame } from 'lucide-react';
 const slides = [
   {
     icon: BookOpen,
-    title: 'Welcome to Holo Journal',
-    desc: 'Your personal space for daily reflection, growth, and mindfulness.',
+    title: 'Holo Journalへようこそ',
+    desc: '毎日の振り返り、成長、マインドフルネスのためのあなた専用スペースです。',
   },
   {
     icon: Sparkles,
-    title: 'Capture Every Moment',
-    desc: 'Write entries, tag them with labels, and track your mood day by day.',
+    title: 'すべての瞬間を記録',
+    desc: 'エントリーを書いて、ラベルで分類し、日々の気分を記録しましょう。',
   },
   {
     icon: Flame,
-    title: 'Build Your Streak',
-    desc: 'Write daily to build streaks, unlock milestones, and see your progress.',
+    title: '連続記録を積み上げよう',
+    desc: '毎日書いて、連続記録を伸ばし、マイルストーンを達成しましょう。',
   },
 ];
 
@@ -67,7 +67,7 @@ export default function OnboardingFlow() {
             else setOnboarded();
           }}
         >
-          {step < slides.length - 1 ? 'Continue' : 'Get Started'}
+          {step < slides.length - 1 ? '次へ' : 'はじめる'}
         </Button>
       </div>
     </div>

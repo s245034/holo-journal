@@ -11,7 +11,7 @@ export default function SearchBar() {
       <input
         value={query}
         onChange={e => setQuery(e.target.value)}
-        placeholder="Search entries..."
+        placeholder="エントリーを検索..."
         className="w-full h-10 rounded-xl bg-muted/60 pl-9 pr-9 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition"
       />
       {query && (

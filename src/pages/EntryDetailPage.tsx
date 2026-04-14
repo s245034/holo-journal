@@ -3,6 +3,7 @@ import { useJournalStore } from '@/stores/journalStore';
 import { MOOD_EMOJIS } from '@/types/journal';
 import LabelChip from '@/components/LabelChip';
 import { format, parseISO } from 'date-fns';
+import { ja } from 'date-fns/locale';
 import { ArrowLeft, Pencil, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -15,7 +16,7 @@ export default function EntryDetailPage() {
   if (!entry) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-muted-foreground">Entry not found</p>
+        <p className="text-muted-foreground">エントリーが見つかりません</p>
       </div>
     );
   }
@@ -24,16 +25,16 @@ export default function EntryDetailPage() {
 
   const handleDelete = () => {
     deleteEntry(entry.id);
-    toast('Entry deleted', {
+    toast('エントリーを削除しました', {
       action: {
-        label: 'Undo',
+        label: '元に戻す',
         onClick: () => {
-          // re-add (simplified - no perfect undo)
           useJournalStore.getState().addEntry({
             title: entry.title,
             body: entry.body,
             mood: entry.mood,
             date: entry.date,
+            time: entry.time || '00:00',
             labelIds: entry.labelIds,
           });
         },
@@ -60,13 +61,20 @@ export default function EntryDetailPage() {
 
       <div className="px-4 pt-6 space-y-4 animate-fade-in">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground font-medium">
-            {format(parseISO(entry.date), 'EEEE, MMMM d, yyyy')}
-          </span>
+          <div>
+            <span className="text-sm text-muted-foreground font-medium">
+              {format(parseISO(entry.date), 'yyyy年M月d日（EEEE）', { locale: ja })}
+            </span>
+            {entry.time && (
+              <span className="text-sm text-muted-foreground font-medium ml-2">
+                {entry.time}
+              </span>
+            )}
+          </div>
           <span className="text-2xl">{MOOD_EMOJIS[entry.mood - 1]}</span>
         </div>
 
-        <h1 className="text-2xl font-bold text-foreground">{entry.title || 'Untitled'}</h1>
+        <h1 className="text-2xl font-bold text-foreground">{entry.title || '無題'}</h1>
 
         {entryLabels.length > 0 && (
           <div className="flex gap-2 flex-wrap">

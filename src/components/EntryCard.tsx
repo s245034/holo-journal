@@ -2,6 +2,7 @@ import { JournalEntry, MOOD_EMOJIS } from '@/types/journal';
 import { useJournalStore } from '@/stores/journalStore';
 import LabelChip from './LabelChip';
 import { format, parseISO } from 'date-fns';
+import { ja } from 'date-fns/locale';
 import { motion } from 'framer-motion';
 
 interface EntryCardProps {
@@ -21,11 +22,12 @@ export default function EntryCard({ entry, onClick }: EntryCardProps) {
     >
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-muted-foreground">
-          {format(parseISO(entry.date), 'EEE, MMM d')}
+          {format(parseISO(entry.date), 'M/d（EEE）', { locale: ja })}
+          {entry.time && <span className="ml-1">{entry.time}</span>}
         </span>
         <span className="text-lg">{MOOD_EMOJIS[entry.mood - 1]}</span>
       </div>
-      <h3 className="font-semibold text-sm text-foreground line-clamp-1">{entry.title || 'Untitled'}</h3>
+      <h3 className="font-semibold text-sm text-foreground line-clamp-1">{entry.title || '無題'}</h3>
       <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{entry.body}</p>
       {entryLabels.length > 0 && (
         <div className="flex gap-1 flex-wrap mt-auto pt-1">

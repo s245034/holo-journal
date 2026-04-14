@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const tabs = [
-  { path: '/', icon: Home, label: 'Home' },
-  { path: '/write', icon: PenLine, label: 'Write' },
-  { path: '/profile', icon: User, label: 'Profile' },
+  { path: '/', icon: Home, label: 'ホーム' },
+  { path: '/write', icon: PenLine, label: '書く' },
+  { path: '/profile', icon: User, label: 'プロフィール' },
 ];
 
 export default function BottomNav() {
@@ -30,10 +30,7 @@ export default function BottomNav() {
                   transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 />
               )}
-              <tab.icon
-                size={22}
-                className={active ? 'text-primary' : 'text-muted-foreground'}
-              />
+              <tab.icon size={22} className={active ? 'text-primary' : 'text-muted-foreground'} />
               <span className={`text-[11px] font-medium ${active ? 'text-primary' : 'text-muted-foreground'}`}>
                 {tab.label}
               </span>

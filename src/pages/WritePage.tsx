@@ -18,6 +18,7 @@ export default function WritePage() {
   const [body, setBody] = useState('');
   const [mood, setMood] = useState(3);
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const [time, setTime] = useState(format(new Date(), 'HH:mm'));
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
 
   useEffect(() => {
@@ -26,26 +27,28 @@ export default function WritePage() {
       setBody(existingEntry.body);
       setMood(existingEntry.mood);
       setDate(existingEntry.date);
+      setTime(existingEntry.time || format(new Date(), 'HH:mm'));
       setSelectedLabels(existingEntry.labelIds);
     } else if (draft && !id) {
       setTitle(draft.title || '');
       setBody(draft.body || '');
       setMood(draft.mood || 3);
       setDate(draft.date || format(new Date(), 'yyyy-MM-dd'));
+      setTime(draft.time || format(new Date(), 'HH:mm'));
       setSelectedLabels(draft.labelIds || []);
     }
   }, [existingEntry, draft, id]);
 
   // Auto-save draft
   useEffect(() => {
-    if (id) return; // don't auto-save when editing
+    if (id) return;
     const timer = setTimeout(() => {
       if (title || body) {
-        saveDraft({ title, body, mood, date, labelIds: selectedLabels });
+        saveDraft({ title, body, mood, date, time, labelIds: selectedLabels });
       }
     }, 1000);
     return () => clearTimeout(timer);
-  }, [title, body, mood, date, selectedLabels, saveDraft, id]);
+  }, [title, body, mood, date, time, selectedLabels, saveDraft, id]);
 
   const toggleLabel = useCallback((labelId: string) => {
     setSelectedLabels(prev =>
@@ -55,15 +58,15 @@ export default function WritePage() {
 
   const handleSave = () => {
     if (!title.trim() && !body.trim()) {
-      toast.error('Write something first!');
+      toast.error('何か書いてください！');
       return;
     }
     if (existingEntry) {
-      updateEntry(existingEntry.id, { title, body, mood, date, labelIds: selectedLabels });
-      toast.success('Entry updated');
+      updateEntry(existingEntry.id, { title, body, mood, date, time, labelIds: selectedLabels });
+      toast.success('更新しました');
     } else {
-      addEntry({ title, body, mood, date, labelIds: selectedLabels, isDraft: false });
-      toast.success('Entry saved! 🎉');
+      addEntry({ title, body, mood, date, time, labelIds: selectedLabels, isDraft: false });
+      toast.success('保存しました！🎉');
     }
     navigate('/');
   };
@@ -76,7 +79,7 @@ export default function WritePage() {
           <ArrowLeft size={20} className="text-foreground" />
         </button>
         <span className="text-xs text-muted-foreground font-medium">
-          {id ? 'Edit Entry' : 'New Entry'}
+          {id ? 'エントリーを編集' : '新しいエントリー'}
         </span>
         <button onClick={handleSave} className="p-1">
           <Check size={20} className="text-primary" />
@@ -84,19 +87,27 @@ export default function WritePage() {
       </div>
 
       <div className="flex-1 px-4 pt-4 space-y-4 overflow-y-auto">
-        {/* Date */}
-        <input
-          type="date"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-          className="text-xs text-muted-foreground bg-transparent focus:outline-none font-medium"
-        />
+        {/* Date & Time */}
+        <div className="flex items-center gap-3">
+          <input
+            type="date"
+            value={date}
+            onChange={e => setDate(e.target.value)}
+            className="text-xs text-muted-foreground bg-transparent focus:outline-none font-medium"
+          />
+          <input
+            type="time"
+            value={time}
+            onChange={e => setTime(e.target.value)}
+            className="text-xs text-muted-foreground bg-transparent focus:outline-none font-medium"
+          />
+        </div>
 
         {/* Title */}
         <input
           value={title}
           onChange={e => setTitle(e.target.value)}
-          placeholder="Title"
+          placeholder="タイトル"
           className="w-full text-2xl font-bold text-foreground bg-transparent focus:outline-none placeholder:text-muted-foreground/40"
         />
 
@@ -104,7 +115,7 @@ export default function WritePage() {
         <textarea
           value={body}
           onChange={e => setBody(e.target.value)}
-          placeholder="Write your thoughts..."
+          placeholder="今日の気持ちを書いてみましょう..."
           className="w-full flex-1 min-h-[40vh] text-sm leading-relaxed text-foreground bg-transparent focus:outline-none placeholder:text-muted-foreground/40 resize-none"
         />
 
@@ -113,7 +124,7 @@ export default function WritePage() {
 
         {/* Labels */}
         <div>
-          <p className="text-xs font-medium text-muted-foreground mb-2">Labels</p>
+          <p className="text-xs font-medium text-muted-foreground mb-2">ラベル</p>
           <div className="flex flex-wrap gap-2">
             {labels.map(l => (
               <LabelChip

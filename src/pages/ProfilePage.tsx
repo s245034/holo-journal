@@ -5,9 +5,9 @@ import LabelManager from '@/components/LabelManager';
 import { Trophy } from 'lucide-react';
 
 const MILESTONE_LABELS: Record<number, string> = {
-  7: '🥉 1 Week',
-  30: '🥈 1 Month',
-  100: '🥇 100 Days',
+  7: '🥉 1週間',
+  30: '🥈 1ヶ月',
+  100: '🥇 100日',
 };
 
 export default function ProfilePage() {
@@ -15,7 +15,7 @@ export default function ProfilePage() {
 
   return (
     <div className="safe-bottom px-4 pt-4 pb-4 space-y-6 max-w-lg mx-auto">
-      <h1 className="text-2xl font-extrabold text-foreground">Profile</h1>
+      <h1 className="text-2xl font-extrabold text-foreground">プロフィール</h1>
 
       <StreakCounter />
 
@@ -23,7 +23,7 @@ export default function ProfilePage() {
       <div className="card-surface p-4 space-y-3">
         <div className="flex items-center gap-2">
           <Trophy size={16} className="text-primary" />
-          <h3 className="text-sm font-bold text-foreground">Milestones</h3>
+          <h3 className="text-sm font-bold text-foreground">マイルストーン</h3>
         </div>
         <div className="flex gap-3">
           {[7, 30, 100].map(m => {
@@ -51,19 +51,19 @@ export default function ProfilePage() {
 
       {/* Stats */}
       <div className="card-surface p-4 space-y-2">
-        <h3 className="text-sm font-bold text-foreground">Stats</h3>
+        <h3 className="text-sm font-bold text-foreground">統計</h3>
         <div className="grid grid-cols-3 gap-3 text-center">
           <div>
             <p className="text-xl font-bold text-foreground">{stats.totalEntries}</p>
-            <p className="text-[11px] text-muted-foreground">Total</p>
+            <p className="text-[11px] text-muted-foreground">合計</p>
           </div>
           <div>
             <p className="text-xl font-bold text-foreground">{stats.currentStreak}</p>
-            <p className="text-[11px] text-muted-foreground">Current</p>
+            <p className="text-[11px] text-muted-foreground">現在の連続</p>
           </div>
           <div>
             <p className="text-xl font-bold text-foreground">{stats.longestStreak}</p>
-            <p className="text-[11px] text-muted-foreground">Longest</p>
+            <p className="text-[11px] text-muted-foreground">最長連続</p>
           </div>
         </div>
       </div>
