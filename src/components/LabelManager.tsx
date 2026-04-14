@@ -9,7 +9,7 @@ export default function LabelManager() {
   const [editing, setEditing] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [title, setTitle] = useState('');
-  const [color, setColor] = useState(PRESET_COLORS[0]);
+  const [color, setColor] = useState<string>(PRESET_COLORS[0]);
   const [emoji, setEmoji] = useState('');
 
   const startEdit = (id: string) => {
