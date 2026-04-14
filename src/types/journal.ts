@@ -4,6 +4,7 @@ export interface JournalEntry {
   body: string;
   mood: number; // 1-5
   date: string; // ISO date string YYYY-MM-DD
+  time: string; // HH:mm
   labelIds: string[];
   createdAt: string;
   updatedAt: string;
@@ -34,8 +35,8 @@ export const PRESET_COLORS = [
 ] as const;
 
 export const DEFAULT_LABELS: Omit<Label, 'id' | 'createdAt'>[] = [
-  { title: 'Personal', color: '#5B5BD6', emoji: '💭' },
-  { title: 'Work', color: '#3B82F6', emoji: '💼' },
-  { title: 'Gratitude', color: '#10B981', emoji: '🙏' },
-  { title: 'Ideas', color: '#F59E0B', emoji: '💡' },
+  { title: '個人', color: '#5B5BD6', emoji: '💭' },
+  { title: '仕事', color: '#3B82F6', emoji: '💼' },
+  { title: '感謝', color: '#10B981', emoji: '🙏' },
+  { title: 'アイデア', color: '#F59E0B', emoji: '💡' },
 ];
