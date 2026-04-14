@@ -21,7 +21,7 @@ export default function WeekSection({ week }: WeekSectionProps) {
       >
         <div>
           <h2 className="text-sm font-bold text-foreground">{week.label}</h2>
-          <p className="text-xs text-muted-foreground">{week.entries.length} {week.entries.length === 1 ? 'entry' : 'entries'}</p>
+          <p className="text-xs text-muted-foreground">{week.entries.length} 件</p>
         </div>
         <ChevronDown
           size={18}

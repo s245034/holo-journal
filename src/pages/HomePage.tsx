@@ -41,14 +41,14 @@ export default function HomePage() {
       <SearchBar />
 
       {/* Label filter */}
-      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         <button
           onClick={() => setFilterLabel(null)}
-          className={`text-xs px-3 py-1 rounded-full font-medium transition whitespace-nowrap ${
+          className={`text-xs px-3 py-1 rounded-full font-medium transition whitespace-nowrap flex-shrink-0 ${
             !filterLabel ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
           }`}
         >
-          All
+          すべて
         </button>
         {labels.map(l => (
           <LabelChip

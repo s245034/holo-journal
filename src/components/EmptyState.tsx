@@ -9,15 +9,15 @@ export default function EmptyState() {
       <div className="h-24 w-24 rounded-3xl bg-primary/10 flex items-center justify-center mb-6">
         <BookOpen size={40} className="text-primary" />
       </div>
-      <h2 className="text-xl font-bold text-foreground mb-2">Your journal is empty</h2>
+      <h2 className="text-xl font-bold text-foreground mb-2">日記がまだありません</h2>
       <p className="text-sm text-muted-foreground mb-6 max-w-[260px]">
-        Start writing your first entry and begin tracking your journey.
+        最初のエントリーを書いて、あなたの日々を記録しましょう。
       </p>
       <Button
         onClick={() => navigate('/write')}
         className="rounded-xl h-11 px-8 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
       >
-        Start Your First Entry
+        最初のエントリーを書く
       </Button>
     </div>
   );

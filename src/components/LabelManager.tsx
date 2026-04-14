@@ -39,7 +39,7 @@ export default function LabelManager() {
   return (
     <div className="card-surface p-4 space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold text-foreground">Labels</h3>
+        <h3 className="text-sm font-bold text-foreground">ラベル</h3>
         {!isOpen && (
           <button onClick={() => { setCreating(true); setTitle(''); setColor(PRESET_COLORS[0]); setEmoji(''); }}>
             <Plus size={18} className="text-primary" />
@@ -47,7 +47,6 @@ export default function LabelManager() {
         )}
       </div>
 
-      {/* Label list */}
       <div className="flex flex-wrap gap-2">
         {labels.map(l => (
           <div key={l.id} className="flex items-center gap-1">
@@ -56,7 +55,6 @@ export default function LabelManager() {
         ))}
       </div>
 
-      {/* Editor */}
       {isOpen && (
         <div className="space-y-3 pt-2 border-t border-border">
           <div className="flex gap-2">
@@ -70,7 +68,7 @@ export default function LabelManager() {
             <input
               value={title}
               onChange={e => setTitle(e.target.value)}
-              placeholder="Label name"
+              placeholder="ラベル名"
               className="flex-1 h-9 rounded-lg bg-muted px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
             />
           </div>
@@ -86,20 +84,20 @@ export default function LabelManager() {
           </div>
           <div className="flex gap-2">
             <button onClick={save} className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium">
-              <Check size={14} /> Save
+              <Check size={14} /> 保存
             </button>
             <button
               onClick={() => { setEditing(null); setCreating(false); }}
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-muted text-muted-foreground text-xs font-medium"
             >
-              <X size={14} /> Cancel
+              <X size={14} /> キャンセル
             </button>
             {editing && (
               <button
                 onClick={() => { deleteLabel(editing); setEditing(null); }}
                 className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive text-xs font-medium ml-auto"
               >
-                <Trash2 size={14} /> Delete
+                <Trash2 size={14} /> 削除
               </button>
             )}
           </div>
