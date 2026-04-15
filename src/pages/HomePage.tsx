@@ -41,8 +41,8 @@ export default function HomePage() {
       <SearchBar />
 
       {/* Label filter */}
-      <div className="relative">
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
+      <div className="relative -mx-4">
+        <div className="flex gap-2 overflow-x-auto py-1 pb-2 scrollbar-hide px-4">
           <button
             onClick={() => setFilterLabel(null)}
             className={`text-xs px-3 py-1.5 rounded-full font-medium transition whitespace-nowrap flex-shrink-0 ${
