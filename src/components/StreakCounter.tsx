@@ -38,7 +38,7 @@ export default function StreakCounter() {
         </div>
         <div>
           <p className="text-xs font-semibold text-foreground">今週</p>
-          <p className="text-[11px] text-muted-foreground">{stats.totalEntries} 件</p>
+          <p className="text-[11px] text-muted-foreground">{weekDays} 日記録</p>
         </div>
       </div>
     </div>
