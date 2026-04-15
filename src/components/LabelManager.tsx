@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useJournalStore } from '@/stores/journalStore';
 import { PRESET_COLORS } from '@/types/journal';
-import { Plus, Pencil, Trash2, X, Check } from 'lucide-react';
+import { Plus, Trash2, X, Check } from 'lucide-react';
 import LabelChip from './LabelChip';
+import EmojiPicker from './EmojiPicker';
 
 export default function LabelManager() {
   const { labels, addLabel, updateLabel, deleteLabel } = useJournalStore();
@@ -57,21 +58,15 @@ export default function LabelManager() {
 
       {isOpen && (
         <div className="space-y-3 pt-2 border-t border-border">
-          <div className="flex gap-2">
-            <input
-              value={emoji}
-              onChange={e => setEmoji(e.target.value)}
-              placeholder="😊"
-              className="w-10 h-9 text-center rounded-lg bg-muted text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-              maxLength={2}
-            />
-            <input
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-              placeholder="ラベル名"
-              className="flex-1 h-9 rounded-lg bg-muted px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-            />
-          </div>
+          <input
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            placeholder="ラベル名"
+            className="w-full h-9 rounded-lg bg-muted px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+
+          <EmojiPicker value={emoji} onChange={setEmoji} />
+
           <div className="flex flex-wrap gap-2">
             {PRESET_COLORS.map(c => (
               <button

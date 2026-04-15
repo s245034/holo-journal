@@ -41,24 +41,27 @@ export default function HomePage() {
       <SearchBar />
 
       {/* Label filter */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-        <button
-          onClick={() => setFilterLabel(null)}
-          className={`text-xs px-3 py-1 rounded-full font-medium transition whitespace-nowrap flex-shrink-0 ${
-            !filterLabel ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-          }`}
-        >
-          すべて
-        </button>
-        {labels.map(l => (
-          <LabelChip
-            key={l.id}
-            label={l}
-            size="md"
-            selected={filterLabel === l.id}
-            onClick={() => setFilterLabel(filterLabel === l.id ? null : l.id)}
-          />
-        ))}
+      <div className="relative">
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
+          <button
+            onClick={() => setFilterLabel(null)}
+            className={`text-xs px-3 py-1.5 rounded-full font-medium transition whitespace-nowrap flex-shrink-0 ${
+              !filterLabel ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+            }`}
+          >
+            すべて
+          </button>
+          {labels.map(l => (
+            <div key={l.id} className="flex-shrink-0">
+              <LabelChip
+                label={l}
+                size="md"
+                selected={filterLabel === l.id}
+                onClick={() => setFilterLabel(filterLabel === l.id ? null : l.id)}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {weeks.length === 0 ? (
