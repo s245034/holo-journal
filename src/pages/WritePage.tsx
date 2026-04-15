@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useJournalStore } from '@/stores/journalStore';
 import MoodSelector from '@/components/MoodSelector';
 import LabelChip from '@/components/LabelChip';
+import InlineLabelCreator from '@/components/InlineLabelCreator';
 import { format } from 'date-fns';
 import { ArrowLeft, Check } from 'lucide-react';
 import { toast } from 'sonner';
@@ -54,6 +55,10 @@ export default function WritePage() {
     setSelectedLabels(prev =>
       prev.includes(labelId) ? prev.filter(l => l !== labelId) : [...prev, labelId]
     );
+  }, []);
+
+  const handleLabelCreated = useCallback((labelId: string) => {
+    setSelectedLabels(prev => [...prev, labelId]);
   }, []);
 
   const handleSave = () => {
@@ -135,6 +140,7 @@ export default function WritePage() {
                 onClick={() => toggleLabel(l.id)}
               />
             ))}
+            <InlineLabelCreator onCreated={handleLabelCreated} />
           </div>
         </div>
       </div>
