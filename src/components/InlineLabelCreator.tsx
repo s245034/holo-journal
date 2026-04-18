@@ -15,15 +15,10 @@ export default function InlineLabelCreator({ onCreated }: InlineLabelCreatorProp
   const [color, setColor] = useState<string>(PRESET_COLORS[0]);
   const [emoji, setEmoji] = useState('');
 
-  const save = () => {
+  const save = async () => {
     if (!title.trim()) return;
-    addLabel({ title, color, emoji: emoji || undefined });
-    // Get newly added label id
-    const labels = useJournalStore.getState().labels;
-    const newLabel = labels[labels.length - 1];
-    if (newLabel && onCreated) {
-      onCreated(newLabel.id);
-    }
+    const newId = await addLabel({ title, color, emoji: emoji || undefined });
+    if (newId && onCreated) onCreated(newId);
     setTitle('');
     setEmoji('');
     setColor(PRESET_COLORS[0]);

@@ -2,7 +2,10 @@ import { useJournalStore } from '@/stores/journalStore';
 import StreakCounter from '@/components/StreakCounter';
 import HeatmapCalendar from '@/components/HeatmapCalendar';
 import LabelManager from '@/components/LabelManager';
-import { Trophy } from 'lucide-react';
+import { Trophy, LogOut } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const MILESTONE_LABELS: Record<number, string> = {
   7: '🥉 1週間',
@@ -12,10 +15,24 @@ const MILESTONE_LABELS: Record<number, string> = {
 
 export default function ProfilePage() {
   const stats = useJournalStore(s => s.stats);
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success('ログアウトしました');
+  };
 
   return (
     <div className="safe-bottom px-4 pt-4 pb-4 space-y-6 max-w-lg mx-auto">
-      <h1 className="text-2xl font-extrabold text-foreground">プロフィール</h1>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold text-foreground">プロフィール</h1>
+          {user?.email && <p className="text-xs text-muted-foreground mt-1">{user.email}</p>}
+        </div>
+        <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-1">
+          <LogOut size={16} /> ログアウト
+        </Button>
+      </div>
 
       <StreakCounter />
 
