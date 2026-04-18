@@ -16,7 +16,7 @@ export default function EntryDetailPage() {
   if (!entry) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-muted-foreground">エントリーが見つかりません</p>
+        <p className="text-muted-foreground">日記が見つかりません</p>
       </div>
     );
   }
@@ -25,7 +25,7 @@ export default function EntryDetailPage() {
 
   const handleDelete = () => {
     deleteEntry(entry.id);
-    toast('エントリーを削除しました', {
+    toast('日記を削除しました', {
       action: {
         label: '元に戻す',
         onClick: () => {

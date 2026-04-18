@@ -11,13 +11,13 @@ export default function EmptyState() {
       </div>
       <h2 className="text-xl font-bold text-foreground mb-2">日記がまだありません</h2>
       <p className="text-sm text-muted-foreground mb-6 max-w-[260px]">
-        最初のエントリーを書いて、あなたの日々を記録しましょう。
+        最初の日記を書いて、あなたの日々を記録しましょう。
       </p>
       <Button
         onClick={() => navigate('/write')}
         className="rounded-xl h-11 px-8 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
       >
-        最初のエントリーを書く
+        最初の日記を書く
       </Button>
     </div>
   );

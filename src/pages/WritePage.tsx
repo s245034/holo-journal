@@ -84,7 +84,7 @@ export default function WritePage() {
           <ArrowLeft size={20} className="text-foreground" />
         </button>
         <span className="text-xs text-muted-foreground font-medium">
-          {id ? 'エントリーを編集' : '新しいエントリー'}
+          {id ? '日記を編集' : '新しい日記'}
         </span>
         <button onClick={handleSave} className="p-1">
           <Check size={20} className="text-primary" />
