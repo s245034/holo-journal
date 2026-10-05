@@ -71,7 +71,11 @@ npm install
 npm run dev
 ```
 
-ルートに `.env` を置き、Supabaseの接続情報を設定してください。
+`.env.example` をコピーして `.env` を作り、Supabaseの接続情報を設定してください。
+
+```sh
+cp .env.example .env
+```
 
 ```
 VITE_SUPABASE_URL=...
