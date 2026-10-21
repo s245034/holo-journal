@@ -1,0 +1,1 @@
+COMMENT ON COLUMN public.journal_entries.label_ids IS 'DEPRECATED: replaced by entry_labels';

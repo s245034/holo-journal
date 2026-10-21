@@ -8,6 +8,13 @@
       "when": 1792596870045,
       "tag": "0000_create_entry_labels",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792596907934,
+      "tag": "0001_deprecate_label_ids",
+      "breakpoints": true
     }
   ]
 }
