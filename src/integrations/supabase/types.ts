@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      entry_labels: {
+        Row: {
+          created_at: string
+          entry_id: string
+          label_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry_id: string
+          label_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry_id?: string
+          label_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entry_labels_entry_id_fkey"
+            columns: ["entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "entry_labels_label_id_fkey"
+            columns: ["label_id"]
+            isOneToOne: false
+            referencedRelation: "labels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       journal_entries: {
         Row: {
           body: string
