@@ -82,7 +82,7 @@ const rowToEntry = (r: any): JournalEntry => ({
   mood: r.mood,
   date: r.date,
   time: r.time ?? '',
-  labelIds: r.label_ids ?? [],
+  labelIds: (r.entry_labels ?? []).map((x: any) => x.label_id),
   createdAt: r.created_at,
   updatedAt: r.updated_at,
   isDraft: r.is_draft,
@@ -109,7 +109,7 @@ export const useJournalStore = create<JournalState>()((set, get) => ({
   loadFromSupabase: async (userId) => {
     set({ userId, loaded: false });
     const [entriesRes, labelsRes] = await Promise.all([
-      supabase.from('journal_entries').select('*').order('date', { ascending: false }),
+      supabase.from('journal_entries').select('*, entry_labels(label_id)').order('date', { ascending: false }),
       supabase.from('labels').select('*').order('created_at', { ascending: true }),
     ]);
     if (entriesRes.error) toast.error('日記の読み込みに失敗しました');
@@ -140,7 +140,6 @@ export const useJournalStore = create<JournalState>()((set, get) => ({
         mood: entry.mood,
         date: entry.date,
         time: entry.time,
-        label_ids: entry.labelIds,
         is_draft: entry.isDraft ?? false,
       })
       .select()
@@ -149,7 +148,14 @@ export const useJournalStore = create<JournalState>()((set, get) => ({
       toast.error('保存に失敗しました');
       return;
     }
-    const newEntry = rowToEntry(data);
+    const labelIds = [...new Set(entry.labelIds ?? [])];
+    if (labelIds.length) {
+      const { error: lErr } = await supabase
+        .from('entry_labels')
+        .insert(labelIds.map(label_id => ({ entry_id: data.id, label_id, user_id: userId })));
+      if (lErr) toast.error('ラベルの保存に失敗しました');
+    }
+    const newEntry = rowToEntry({ ...data, entry_labels: labelIds.map(label_id => ({ label_id })) });
     set(state => {
       const entries = [newEntry, ...state.entries];
       return { entries, draft: null, stats: computeStats(entries) };
@@ -157,13 +163,13 @@ export const useJournalStore = create<JournalState>()((set, get) => ({
   },
 
   updateEntry: async (id, updates) => {
+    const userId = get().userId;
     const patch: any = {};
     if (updates.title !== undefined) patch.title = updates.title;
     if (updates.body !== undefined) patch.body = updates.body;
     if (updates.mood !== undefined) patch.mood = updates.mood;
     if (updates.date !== undefined) patch.date = updates.date;
     if (updates.time !== undefined) patch.time = updates.time;
-    if (updates.labelIds !== undefined) patch.label_ids = updates.labelIds;
     if (updates.isDraft !== undefined) patch.is_draft = updates.isDraft;
 
     const { data, error } = await supabase
@@ -176,7 +182,26 @@ export const useJournalStore = create<JournalState>()((set, get) => ({
       toast.error('更新に失敗しました');
       return;
     }
-    const updated = rowToEntry(data);
+    const current = get().entries.find(e => e.id === id)?.labelIds ?? [];
+    let labelIds = current;
+    if (updates.labelIds !== undefined && userId) {
+      const next = [...new Set(updates.labelIds)];
+      const toRemove = current.filter(l => !next.includes(l));
+      const toAdd = next.filter(l => !current.includes(l));
+      if (toRemove.length) {
+        const { error: dErr } = await supabase
+          .from('entry_labels').delete().eq('entry_id', id).in('label_id', toRemove);
+        if (dErr) toast.error('ラベルの更新に失敗しました');
+      }
+      if (toAdd.length) {
+        const { error: iErr } = await supabase
+          .from('entry_labels')
+          .insert(toAdd.map(label_id => ({ entry_id: id, label_id, user_id: userId })));
+        if (iErr) toast.error('ラベルの更新に失敗しました');
+      }
+      labelIds = next;
+    }
+    const updated = rowToEntry({ ...data, entry_labels: labelIds.map(label_id => ({ label_id })) });
     set(state => {
       const entries = state.entries.map(e => (e.id === id ? updated : e));
       return { entries, stats: computeStats(entries) };
