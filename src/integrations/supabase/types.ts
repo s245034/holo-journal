@@ -57,7 +57,6 @@ export type Database = {
           date: string
           id: string
           is_draft: boolean
-          label_ids: string[]
           mood: number
           time: string | null
           title: string
@@ -70,7 +69,6 @@ export type Database = {
           date: string
           id?: string
           is_draft?: boolean
-          label_ids?: string[]
           mood?: number
           time?: string | null
           title?: string
@@ -83,7 +81,6 @@ export type Database = {
           date?: string
           id?: string
           is_draft?: boolean
-          label_ids?: string[]
           mood?: number
           time?: string | null
           title?: string
