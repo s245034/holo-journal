@@ -1,0 +1,1 @@
+ALTER TABLE public.journal_entries DROP COLUMN label_ids;
